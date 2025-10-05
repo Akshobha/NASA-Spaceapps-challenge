@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Exoplanet Classifier</title>
+</head>
+<body>
+    <h1>Exoplanet classifier</h1>
+
+    <p><b>Guidelines:</b></p>
+    <ul>
+        <li>1. Make sure your input file is in CSV format.</li>
+        <li>2. There should be no missing values in your input file.</li>
+        <li>3. Please read the README file in the cloned repo path.</li>
+        <li>4. Your device should have Python, Scikit-learn, Numpy, Pytorch, Pandas and GitPython installed.</li>
+    </ul>
+
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    {% if result_message %}
+    <div>
+        <h3>Result:</h3>
+        <div style="white-space: pre-wrap;">{{ result_message|safe }}</div>
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        {% if step == 1 %}
+            <label>Are you gonna input a dataset for a model to train on? (yes/no)</label><br>
+            <input type="text" name="user_input1" required />
+            <br><br>
+            <button type="submit">Submit</button>
+        {% elif step == 2 %}
+            {% if request.form.get('user_input1') == 'yes' %}
+                <label>Input path of file for training (fill this field first and click submit):</label><br>
+                <input type="text" name="train_file_path" required /><br><br>
+
+                <label>Enter target column name (in quotes):</label><br>
+                <input type="text" name="target_column" required /><br><br>
+
+                <label>Enter feature column names, comma separated (in quotes):</label><br>
+                <input type="text" name="features" required /><br><br>
+
+                <button type="submit" name="train_submit" value="1">Start Training</button>
+                <br><br>
+                <label>Input path of file to classify (after training finishes):</label><br>
+                <input type="text" name="classify_file_path" /><br><br>
+                <button type="submit" name="classify_submit" value="1">Classify</button>
+            {% else %}
+                <label>Input path of file to classify:</label><br>
+                <input type="text" name="classify_file_path" required /><br><br>
+                <button type="submit" name="classify_submit" value="1">Classify</button>
+            {% endif %}
+        {% elif step == 3 %}
+            <p>Training in progress. Please wait and classify after completion.</p>
+            <br>
+            <label>Input path of file to classify:</label><br>
+            <input type="text" name="classify_file_path" /><br><br>
+            <button type="submit" name="classify_submit" value="1">Classify</button>
+        {% endif %}
+    </form>
+</body>
+</html>
