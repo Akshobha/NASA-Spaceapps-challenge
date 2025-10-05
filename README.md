@@ -8,7 +8,7 @@ Here are some guidelines you need to follow while using my code:
 4. You should delete your local repo of this everytime you use this prototype as it git clones this repo everytime it's used.
 5. Make sure your device is plugged in for optimal performance as this prototype runs an FNN model locally on your device.
 6. Follow the instructions given in my apps UI.
-7. Your input files should have the following variables:
+7. Your input files should have the following variables(with the same names as what's in this file):
 8. pl_trandurh:Planet Transit Duration Value [hours]
 9. pl_rade:Planet Radius Value [R_Earth]
 10. st_dist: Stellar Distance [pc]
