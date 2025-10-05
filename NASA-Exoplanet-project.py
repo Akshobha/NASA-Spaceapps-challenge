@@ -57,7 +57,7 @@ def user_input1():
         btn.pack()
 
         try:
-            lable8 = tk.Label(Project, text="Can you input what's your target column(Fill this field second and click submit)",bg="light pink")
+            lable8 = tk.Label(Project, text="Can you input what's your target parameter(Fill this field second and click submit)",bg="light pink")
             lable8.pack()
             entry3 = tk.Entry(Project)
             entry3.pack()
@@ -70,7 +70,7 @@ def user_input1():
             btn2 = tk.Button(Project, text="Submit", command=user_target)
             btn2.pack()    
 
-            lable9 = tk.Label(Project, text="Input your features(fill this field third and click enter after)",bg="light pink")
+            lable9 = tk.Label(Project, text="Input your features(fill this field third and click submit)",bg="light pink")
             lable9.pack()
             entry4 = tk.Entry(Project)
             entry4.pack()
@@ -322,5 +322,6 @@ def user_input1():
 btm = tk.Button(Project, text="Submit", command=user_input1)
 btm.pack()
 Project.mainloop()
+
 
 
