@@ -1,1 +1,2 @@
-
+The first dataset you see in this folder has been processed using spline interpolation with a degree of 2.
+The second one's the original raw file which has information on different parameter values.
