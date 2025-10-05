@@ -19,6 +19,7 @@ git.Git(project_path).clone("https://github.com/Akshobha/NASA-Spaceapps-challeng
 Project = tk.Tk()
 Project.title("Exoplanet classifier")
 Project.geometry("700x800")
+root.configure(bg='lightblue')
 large_font = font.Font(family="Satoshi", size=24, weight="bold")
 
 lable1 = tk.Label(Project, text="Guidelines", anchor="center")
@@ -321,4 +322,5 @@ def user_input1():
 btm = tk.Button(Project, text="Submit", command=user_input1)
 btm.pack()
 Project.mainloop()
+
 
