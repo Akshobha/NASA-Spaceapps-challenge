@@ -129,16 +129,13 @@ def user_input1():
                 model = FNNClassifier(input_dim, output_dim)
                 global device
                 device = tr.device("cuda" if tr.cuda.is_available() else "cpu")
-
                 from collections import Counter
                 class_counts = Counter(y_train)
                 num_classes = len(np.unique(y_train))
                 counts = np.array([class_counts[i] for i in range(num_classes)])
                 class_weights = 1.0 / counts
                 class_weights = class_weights / class_weights.sum()
-
                 class_weights_tensor = tr.tensor(class_weights, dtype=tr.float32)
-                
                 model = model.to(device)
                 class_weights_tensor = class_weights_tensor.to(device)
                 model.load_state_dict(tr.load(r"C:\Nasaproject\NASA-Spaceapps-challenge\parameter-values-for-model"))
@@ -324,3 +321,4 @@ def user_input1():
 btm = tk.Button(Project, text="Submit", command=user_input1)
 btm.pack()
 Project.mainloop()
+
