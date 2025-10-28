@@ -1,6 +1,7 @@
 import tkinter as tk
 import torch as tr
 import pandas as pd
+from torch.optim.lr_scheduler import ExponentialLR
 from tkinter import font
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 import numpy as np
@@ -99,15 +100,15 @@ def user_input1():
                 y_test_tensor = tr.tensor(y_test, dtype=tr.long)
                 train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
                 test_dataset = TensorDataset(X_test_tensor, y_test_tensor)
-                train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
-                test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)
+                train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+                test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
                 class FNNClassifier(nn.Module):
                     def __init__(self, input_dim, output_dim):
                         super(FNNClassifier, self).__init__()
-                        self.fc1 = nn.Linear(input_dim, 368)
+                        self.fc1 = nn.Linear(input_dim, 375)
                         self.act1 = nn.ReLU()
-                        self.fc2 = nn.Linear(368, 250)
+                        self.fc2 = nn.Linear(375, 250)
                         self.act2 = nn.ReLU()
                         self.fc3 = nn.Linear(250, 200)
                         self.act3 = nn.ReLU()
@@ -142,10 +143,8 @@ def user_input1():
                 model.load_state_dict(tr.load(r"C:\Nasaproject\NASA-Spaceapps-challenge\parameter-values-for-model"))
                 model.train()
                 criterion = nn.CrossEntropyLoss(weight=class_weights_tensor)
-                optimizer = tr.optim.AdamW(model.parameters(), lr=1e-4)
-                scheduler = tr.optim.lr_scheduler.CyclicLR(
-                    optimizer, base_lr=1e-4, max_lr=1e-3, step_size_up=40, mode="triangular", cycle_momentum=False
-                )
+                optimizer = tr.optim.SGD(model.parameters(), lr=1e-1)
+                scheduler = ExponentialLR(optimizer,gamma=0.98)
 
                 def update_label(report, accuracy):
                     def update():
@@ -157,7 +156,7 @@ def user_input1():
                 y_test_tensor = tr.tensor(y_test, dtype=tr.long).to(device)
 
                 def train_model():
-                    epochs = 100
+                    epochs = 200
                     epoch_losses = []
                     for epoch in range(epochs):
                         model.train()
@@ -169,8 +168,8 @@ def user_input1():
                             loss = criterion(outputs, y_batch)
                             loss.backward()
                             optimizer.step()
-                            scheduler.step()
                             total_loss += loss.item()
+                        scheduler.step()
                         epoch_losses.append(total_loss)
                         if (epoch + 1) % 5 == 0:
                             print(f"Epoch [{epoch+1}/{epochs}] - Loss: {total_loss:.4f}")
@@ -206,9 +205,9 @@ def user_input1():
                 class FNNClassifier(nn.Module):
                     def __init__(self, input_dim, output_dim):
                         super(FNNClassifier, self).__init__()
-                        self.fc1 = nn.Linear(input_dim, 368)
+                        self.fc1 = nn.Linear(input_dim, 375)
                         self.act1 = nn.ReLU()
-                        self.fc2 = nn.Linear(368, 250)
+                        self.fc2 = nn.Linear(375, 250)
                         self.act2 = nn.ReLU()
                         self.fc3 = nn.Linear(250, 200)
                         self.act3 = nn.ReLU()
@@ -274,9 +273,9 @@ def user_input1():
             class FNNClassifier(nn.Module):
                 def __init__(self, input_dim, output_dim):
                     super(FNNClassifier, self).__init__()
-                    self.fc1 = nn.Linear(input_dim, 368)
+                    self.fc1 = nn.Linear(input_dim, 375)
                     self.act1 = nn.ReLU()
-                    self.fc2 = nn.Linear(368, 250)
+                    self.fc2 = nn.Linear(375, 250)
                     self.act2 = nn.ReLU()
                     self.fc3 = nn.Linear(250, 200)
                     self.act3 = nn.ReLU()
@@ -322,6 +321,3 @@ def user_input1():
 btm = tk.Button(Project, text="Submit", command=user_input1)
 btm.pack()
 Project.mainloop()
-
-
-
