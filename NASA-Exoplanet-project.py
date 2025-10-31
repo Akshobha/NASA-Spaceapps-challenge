@@ -173,7 +173,7 @@ def user_input1():
                         epoch_losses.append(total_loss)
                         if (epoch + 1) % 5 == 0:
                             print(f"Epoch [{epoch+1}/{epochs}] - Loss: {total_loss:.4f}")
-                    tr.save(model.state_dict(), r"C:\Nasaproject\NASA-Spaceapps-challenge\parameter-values-for-model")
+                    tr.save(model.state_dict(), r"C:\Nasaproject\NASA-Spaceapps-challenge\parameter2-values-for-model")
                     model.eval()
                     with tr.no_grad():
                         outputs = model(X_test_tensor)
@@ -228,7 +228,7 @@ def user_input1():
                 input_dim = len(feature_cols)
                 output_dim = len(le.classes_)
                 model = FNNClassifier(input_dim, output_dim).to(device)
-                model.load_state_dict(tr.load(r"C:\Nasaproject\NASA-Spaceapps-challenge\parameter-values-for-model"))
+                model.load_state_dict(tr.load(r"C:\Nasaproject\NASA-Spaceapps-challenge\parameter2-values-for-model"))
                 model.eval()
 
                 with tr.no_grad():
